@@ -1,0 +1,27 @@
+name: Deploy to notowen EC2 instance
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to EC2 over SSH
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: notowen.com
+          username: ec2-user
+          key: ${{ secrets.NOTOWEN_EC2_SSH_KEY }}
+          script: |
+            set -e
+            mkdir -p ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+            # Always start from a clean clone
+            rm -rf ~/notowen.com
+            git clone git@github.com:notowen333/notowen.com.git ~/notowen.com
+
+            cd ~/notowen.com
+            cd site
+            chmod +x scripts/deploy.sh
+            ./scripts/deploy.sh
