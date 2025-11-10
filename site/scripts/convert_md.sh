@@ -11,5 +11,5 @@ find "$SRC" -type f -name '*.md' | while read -r file; do
     rel="${file#$SRC/}"
     out="$OUT/${rel%.md}.html"
     mkdir -p "$(dirname "$out")"
-    pandoc --template=pandoc/template.html "$file" -o "$out"
+    pandoc --template=pandoc/template.html --highlight-style=pygments "$file" -o "$out"
 done

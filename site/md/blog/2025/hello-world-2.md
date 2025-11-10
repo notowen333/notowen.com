@@ -3,6 +3,6 @@ This is my second try at a software blog. My first attempt was in college. I was
 I also didn't have interview-style alogrithms skills so I failed all the automated assessments that companies sent me. This began my quest to learn practical skills and get a job. I joined the [privacy tech lab](https://privacytechlab.org).
 
 ```
-sudo
+sudo yum install
 ```
 
