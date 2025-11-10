@@ -7,7 +7,29 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy to EC2 over SSH
+
+      - name: Checkout source repo
+        uses: actions/checkout@v4
+
+      - name: Install pandoc on gh runner
+        run: sudo apt-get update && sudo apt-get install -y pandoc
+
+      - name: Convert Markdown to HTML
+        run: |
+          cd site
+          chmod +x scripts/convert_md.sh
+          ./scripts/convert_md.sh
+
+      - name: Upload repo to EC2
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: notowen.com
+          username: ec2-user
+          key: ${{ secrets.NOTOWEN_EC2_SSH_KEY }}
+          source: "."
+          target: "~/notowen.com"
+
+      - name: Run deploy script on EC2
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: notowen.com
@@ -15,15 +37,6 @@ jobs:
           key: ${{ secrets.NOTOWEN_EC2_SSH_KEY }}
           script: |
             set -e
-            mkdir -p ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
-
-            # install pandoc
-            sudo yum install -y pandoc
-
-            # Always start from a clean clone
-            rm -rf ~/notowen.com
-            git clone git@github.com:notowen333/notowen.com.git ~/notowen.com
-
             cd ~/notowen.com/site
-            chmod +x scripts/convert_md.sh && ./scripts/convert_md.sh
-            chmod +x scripts/deploy.sh && ./scripts/deploy.sh
+            chmod +x scripts/deploy.sh
+            ./scripts/deploy.sh
