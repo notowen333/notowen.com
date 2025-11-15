@@ -7,9 +7,15 @@ body {
     line-height: 1.6;
     color: #222;
     background: #fff;
+
     text-align: left !important;
-    margin-left: auto;
+
+    /* This keeps the centered layout but prevents visual centering of content */
+    margin-left: max(1rem, calc((100vw - 65ch) / 2));
     margin-right: auto;
+
+    /* Prevent body from offsetting content based on indentation */
+    padding-left: 0;
 }
 
 h1, h2, h3, h4, h5, h6,
@@ -22,6 +28,7 @@ p {
     margin-bottom: 1.2em;
 }
 
+/* Mobile */
 @media (max-width: 600px) {
     body {
         max-width: 45ch;
@@ -31,7 +38,7 @@ p {
     }
 }
 
-/* Autoindex formatting that used to be in autoindex_head.html */
+/* Autoindex formatting restored */
 h1 + hr + pre {
     font-size: 24px !important;
     line-height: 1.6 !important;
