@@ -1,16 +1,37 @@
 body {
     margin: 0;
     padding: 1rem;
-    max-width: 65ch;           /* Nice word count per line */
+    max-width: 65ch;
     font-family: system-ui, sans-serif;
     font-size: 18px;
     line-height: 1.6;
     color: #222;
     background: #fff;
-    text-align: left;          /* Left-align all text */
+
+    /* force left alignment for body */
+    text-align: left !important;
+
+    /* center the BODY box on the page */
     margin-left: auto;
     margin-right: auto;
+
+    /* ensure the body acts like a normal block container */
+    display: block;
 }
+
+/* absolutely force all text elements to left-align */
+h1, h2, h3, h4, h5, h6,
+p, ul, ol, li, blockquote, pre, code, div {
+    text-align: left !important;
+    display: block;     /* prevents weird centering */
+}
+
+/* paragraph spacing */
+p {
+    margin-bottom: 1.2em;
+}
+
+/* mobile layout */
 @media (max-width: 600px) {
     body {
         max-width: 45ch;
@@ -18,10 +39,4 @@ body {
         line-height: 1.7;
         padding: 0.75em 0.5em;
     }
-}
-body, h1, h2, h3, h4, h5, h6, p, ul, ol, li, blockquote {
-    text-align: left;
-}
-p {
-    margin-bottom: 1.2em;      /* Space between paragraphs */
 }
