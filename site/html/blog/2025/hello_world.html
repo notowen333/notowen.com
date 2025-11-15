@@ -1,8 +1,11 @@
 <!DOCTYPE html>
+<html>
 <head>
     <title>Hello World!</title>
     <!--# include virtual="/_partials/head.html" -->
 </head>
+
+<body>
 
 <h2>My software beginnings and first few years in industry</h2>
 <p>
@@ -61,7 +64,7 @@ To serve this website:
 3. provide a CA on the machine by running lets encrypt python script that verifies ownership (this writes a private secret to the EC2 disk)
 4. give EC2 an elastic IPV4 address and provide that in the DNS as the A record
 5. (optional) assign an IPV6 address in the auto-generated VPC associated with the EC2 and assign that in the DNS as the AAAA record
-6. Add my private key as a GitHub secret and let the GitHub action runner ssh into the machine, copy the content of the repo onto the ec2 box, and reload nginx
+6. Add private key as a GitHub secret and let the GitHub action runner ssh into the machine, copy the content of the repo onto the ec2 box, and reload nginx
 </p>
 
 <h2>Aside: Trying and giving up on markdown</h2>
@@ -73,4 +76,7 @@ installs and runs pandoc in its machine, and then copies that output into the EC
 I looked back at this a week later and decided this was way too complicated for what this website is supposed to be. Serve static text. So I deleted it all! Simplicity and neatness really go a far way.
 Working on projects that don't show a consistent attention to it is usually not fun.
 </p>
+
+</body>
+</html>
 
