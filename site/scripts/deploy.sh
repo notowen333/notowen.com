@@ -2,7 +2,7 @@
 set -Eeuo pipefail
 
 SITE=notowen.com
-SRC="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+SRC="$(cd "$(dirname "$(readlink -f "$0")")/.." && pwd)"
 HTML_DST="/var/www/$SITE/html"
 CONF_DST="/etc/nginx/conf.d/$SITE.conf"
 SNIPPETS_DST="/etc/nginx/snippets/ssl-params.conf"
