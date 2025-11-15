@@ -19,6 +19,9 @@ body {
         padding: 0.75em 0.5em;
     }
 }
+body, h1, h2, h3, h4, h5, h6, p, ul, ol, li, blockquote {
+    text-align: left;
+}
 p {
     margin-bottom: 1.2em;      /* Space between paragraphs */
 }

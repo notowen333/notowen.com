@@ -13,7 +13,8 @@ This is my second try at a software blog. My first attempt was in college. I was
 in Connecticut, trying to get a software internship. At Wesleyan the CS curriculum focused mainly on the math/proofs/programming languages. I
 had very little practical software engineering skills. I didn't know what a unit test was, I hadn't heard of SQL, I hadn't heard of AuthN/AuthZ, and I didn't understand the
 basics of a client server relationship.
-
+</p>
+<p>
 I also didn't have interview-style alogrithms skills, so I failed all the automated assessments that companies sent me. This began my quest to 
 learn practical skills and get a job. I joined the <a href="https://privacytechlab.org">privacy tech lab</a> at Wesleyan where I worked on <a href="https://github.com/privacy-tech-lab/privacy-pioneer">Privacy Pioneer</a>
 a browser extension that read HTTP request and responses and generated "privacy labels" based on automated scanning techniques. It was a great experience to work 
@@ -26,7 +27,8 @@ compute, for networking, for authentication. Managed services, whether internal 
 
 To be fair to Privacy Pioneer, as a browser extension focused on privacy, we went out of our way to keep everything local. We used cookies and <a href="https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API">IndexedDB</a> a local broswer
 store to read and write results from the extension. So, it makes sense that we used a less commonn local tech stack.
-
+</p>
+<p>
 Without asking for any transfers, I've been shuffled to four different teams and three orgs in 3 years at AWS. I've mostly worked in developer tooling: CodeBuild, Codecatalyst (failed GitHub competitor),
 Q Developer (llm chat panel in the AWS console), and now Bedrock AgentCore—-my first team that is more traditional infra. I've learned a lot in these three years, but I'm still only at the very
 beginning of my journey as a developer. I'm certainly much more versed than I was walking out of Wesleyan as a fresh graduate, but the software world is an endless ocean.
@@ -48,7 +50,8 @@ any time, it's hard to provide a fixed value. The lazy solution is to rely on pr
 There are still other risks that I don't have the full context of, so don't leave port 20 open on a critical machine.
 
 I've worked on AWS teams that put the service inside of a VPC and even configured Route53 records, but it's all too easy to work on something just following existing patterns without understanding what it is.
-
+</p>
+<p>
 Nginx was popular in the Apache days as a full server solution. That's why it has nice functionality to serve static assets (which is what serves this website!). Nowadays, it's commonly used as a reverse-proxy in front of backend servers. The name
 "reverse-proxy" was always confusing to me, but all it means is:
 
@@ -57,7 +60,9 @@ is implemented."
 
 The service can expose the reverse-proxy IP and the client has no knowledge of the backend networking. To use nginx as an L7 load balancer, you point the DNS record
 at the IP running nginx and then inside of that server, make connections to backend services. Any L7 LB, is also a reverse-poxy. Popular cloud-based ones would be AWS ALB, AWS API Gateway, and the GCP/Azure versions of these products.
+</p>
 
+<p>
 To serve this website:
 1. ssh into the EC2 bearing the private key
 2. install and start nginx on the EC2
