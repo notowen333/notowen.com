@@ -83,12 +83,12 @@ at the IP running nginx and then inside of that server, make connections to back
 
 <p>To serve this website:</p>
 <ol>
-    <li>ssh into the EC2 bearing the private key</li>
-    <li>install and start nginx on the EC2</li>
-    <li>provide a CA on the machine by running lets encrypt python script that verifies ownership (this writes a private secret to the EC2 disk)</li>
-    <li>give EC2 an elastic IPV4 address and provide that in the DNS as the A record</li>
-    <li>(optional) assign an IPV6 address in the auto-generated VPC associated with the EC2 and assign that in the DNS as the AAAA record</li>
-    <li>Add private key as a GitHub secret and let the GitHub action runner ssh into the machine, copy the content of the repo onto the EC2 box, and reload nginx</li>
+    <li>1. ssh into the EC2 bearing the private key</li>
+    <li>2. install and start nginx on the EC2</li>
+    <li>3. provide a CA on the machine by running lets encrypt python script that verifies ownership (this writes a private secret to the EC2 disk)</li>
+    <li>4. give EC2 an elastic IPV4 address and provide that in the DNS as the A record</li>
+    <li>5. (optional) assign an IPV6 address in the auto-generated VPC associated with the EC2 and assign that in the DNS as the AAAA record</li>
+    <li>6. Add private key as a GitHub secret and let the GitHub action runner ssh into the machine, copy the content of the repo onto the EC2 box, and reload nginx</li>
 </ol>
 
 <h2>Aside: Trying and giving up on markdown</h2>

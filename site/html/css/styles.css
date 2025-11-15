@@ -1,3 +1,7 @@
+* {
+    text-align: left !important;
+}
+
 body {
     margin: 0;
     padding: 1rem;
@@ -18,12 +22,6 @@ body {
     padding-left: 0;
 }
 
-h1, h2, h3, h4, h5, h6,
-p, ul, ol, li, blockquote, pre, code, div {
-    text-align: left !important;
-    display: block;
-}
-
 p {
     margin-bottom: 1.2em;
 }
@@ -39,7 +37,12 @@ p {
 }
 
 /* Autoindex formatting restored */
-h1 + hr + pre {
+.autoindex pre,
+.autoindex h1 + hr + pre {
     font-size: 24px !important;
     line-height: 1.6 !important;
+}
+
+.autoindex * {
+    text-align: left !important;
 }
