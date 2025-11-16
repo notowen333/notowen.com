@@ -10,28 +10,22 @@
 <h2>My software beginnings and first few years in industry</h2>
 <p>
 This is my second try at a software blog. My first attempt was in college. I was studying at Wesleyan University, a small liberal arts college 
-in Connecticut, trying to get a software internship. At Wesleyan the CS curriculum focused mainly on the math/proofs/programming languages. I
-had very little practical software engineering skills. I didn't know what a unit test was, I hadn't heard of SQL, I hadn't heard of AuthN/AuthZ, and I didn't understand the
+in Connecticut, trying to get a software internship. At Wesleyan the CS curriculum focused mainly on math, proofs, and programming languages. I
+had almost no practical software engineering skills. I didn't know what a unit test was, I hadn't heard of SQL, I hadn't heard of AuthN/AuthZ, and I didn't understand the
 basics of a client server relationship.
 </p>
 
 <p>
 I also didn't have interview-style alogrithms skills, so I failed all the automated assessments that companies sent me. This began my quest to 
 learn practical skills and get a job. I joined the <a href="https://privacytechlab.org">privacy tech lab</a> at Wesleyan where I worked on <a href="https://github.com/privacy-tech-lab/privacy-pioneer">Privacy Pioneer</a>,
-a browser extension that read HTTP request and responses and generated "privacy labels" based on automated scanning techniques. It was a great experience to work 
-on software in a team setting, extending other people's work and adhering to code style and structure conventions. Browser extensions are implemented as mini-webpages in the popup, and then
-they also usually have a full-sized webpage to go along with them, so we wrote a React app to implement those web pages. The backend was an extension <a href="https://developer.chrome.com/docs/extensions/develop/concepts/service-workers">"worker"</a> which was a
-JavaScript (we didn't think to write TypeScript and honestly for a smaller project this was a non-problem) program that ran in the background after installing the extension.
+a browser extension that intercepted HTTP requests and responses to generate "privacy labels" based on automated scanning techniques. We wrote a React app to implement the
+pop-up window and the extension webpage. The backend was a browser extension <a href="https://developer.chrome.com/docs/extensions/develop/concepts/service-workers">"worker"</a> which was a small
+JavaScript program that ran in the background after installing the extension. It used a Firefox broswer extension API (not available to Chrome extensions) to read HTTP requests and responses.
 </p>
 
 <p>
 What I didn't really put together while working on Privacy Pioneer was how most software applications are built by combining managed services; modeling them, deploying them, providing credentials to them, calling into them. For storage, for 
 compute, for networking, for authentication. Managed services, whether internal or external, is how most software is implemented. And I didn't know anything about any of that until I started at AWS after graduation.
-</p>
-
-<p>
-To be fair to Privacy Pioneer, as a browser extension focused on privacy, we went out of our way to keep everything local. We used cookies and <a href="https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API">IndexedDB</a>, a local browser
-store to read and write results from the extension. So, it makes sense that we used a less common local tech stack.
 </p>
 
 <p>
@@ -46,7 +40,7 @@ I'm hoping to use this blog to gather, re-enforce, and remember my learnings in 
 
 <h2>Making this website</h2>
 <p>
-I went out of my way to make this website somewhat "manually," to be exposed to as many details I haven't seen as possible.
+I went out of my way to make this website somewhat "manually," (but still relying on managed services and existing libraries) to be exposed to as many details I haven't seen as possible.
 </p>
 
 <p>
@@ -56,8 +50,8 @@ hints that contain the IPs for the root DNS. The TLD DNS for .com is just a hand
 </p>
 
 <p>
-Similarly, in the topic of IP, when you set up an EC2 instance, you need to define the "security group" for which IPs can connect to the server for different protocols. Since this website serves HTTPS and redirects HTTP to HTTPS,
-I leave 0.0.0.0/0 open for port 80 and 443. Then, you need to select an SSH security group. The best practice is to narrow the IPs included for SSH, but since your ISP can change your public IP at 
+Similarly, on the topic of IP, when setting up an EC2 instance, you need to define the "security group" for which IPs can connect to the EC2. Security groups are split by protocol and port. Since this website serves HTTPS and redirects HTTP to HTTPS,
+I leave 0.0.0.0/0 open on port 80 and 443. Then, you need to select an SSH security group. The best practice is to narrow the IPs included for SSH, but since your ISP can change your public IP at 
 any time, it's hard to provide a fixed value. The lazy solution is to rely on private keys. Mathematically with key-only authentication, an open ssh port is not suceptiable to brute force attack (infinite hotels with infinite typewriters kind of reasoning). 
 There are still other risks that I don't have the full context of, so don't leave port 20 open on a critical machine.
 </p>
@@ -100,7 +94,7 @@ installs and runs pandoc in its machine, and then copies that output into the EC
 
 <p>
 I looked back at this a week later and decided this was way too complicated for what this website is supposed to be. Serve static text. So I deleted it all! Simplicity and neatness really go a far way.
-At the same time, I just spend more time than I would like fighting with HTML. Hopefully the LLM can bridge the tradeoff here :&#41;
+At the same time, I just spend more time than I would like fighting with HTML. Hopefully the LLM can bridge the tradeoff here and fix-up my HTML for me :&#41;
 </p>
 
 </body>
