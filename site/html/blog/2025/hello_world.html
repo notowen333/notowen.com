@@ -18,46 +18,48 @@ basics of a client server relationship.
 <p>
 I also didn't have interview-style alogrithms skills, so I failed all the automated assessments that companies sent me. This began my quest to 
 learn practical skills and get a job. I joined the <a href="https://privacytechlab.org">privacy tech lab</a> at Wesleyan where I worked on <a href="https://github.com/privacy-tech-lab/privacy-pioneer">Privacy Pioneer</a>,
-a browser extension that intercepted HTTP requests and responses to generate "privacy labels" based on automated scanning techniques. We wrote a React app to implement the
-pop-up window and the extension webpage. The backend was a browser extension <a href="https://developer.chrome.com/docs/extensions/develop/concepts/service-workers">"worker"</a> which was a small
-JavaScript program that ran in the background after installing the extension. It used a Firefox broswer extension API (not available to Chrome extensions) to read HTTP requests and responses.
+a browser extension that intercepted HTTP requests and responses to generate "privacy labels" based on automated scanning techniques. We wrote a React app to implement the extension's
+pop-up window and full-featured webpage. The backend was a browser extension <a href="https://developer.chrome.com/docs/extensions/develop/concepts/service-workers">"worker"</a> which was a small
+JavaScript program that ran in the background. It uses a Firefox (not available to Chrome extensions) broswer extension API, `webRequest`, to read HTTP requests and responses.
 </p>
 
 <p>
-What I didn't really put together while working on Privacy Pioneer was how most software applications are built by combining managed services; modeling them, deploying them, providing credentials to them, calling into them. For storage, for 
-compute, for networking, for authentication. Managed services, whether internal or external, is how most software is implemented. And I didn't know anything about any of that until I started at AWS after graduation.
+What I didn't really put together while working on Privacy Pioneer was how most software applications are built by combining managed services. Modeling them, deploying them, providing credentials to them, instantiating clients and calling into them. For storage, for 
+compute, for networking, for authentication. Managed services, whether internal or external, is how most software is implemented. Until I started at AWS after graduation, I didn't know the first thing about managed services. At AWS managed services are created
+using other AWS managed services!
 </p>
 
 <p>
 Without asking for any transfers, I've been shuffled to four different teams and three orgs in 3 years at AWS. I've mostly worked in developer tooling: CodeBuild, Codecatalyst (failed GitHub competitor),
 Q Developer (llm chat panel in the AWS console), and now Bedrock AgentCore—my first team that is more traditional infra. I've learned a lot in these three years, but I'm still only at the very
-beginning of my journey as a developer. I'm certainly much more versed than I was walking out of Wesleyan as a fresh graduate, but the software world is an endless ocean.
+beginning of my journey as a developer. I'm further along than I was leaving Wesleyan as a fresh graduate, but the software world is an endless ocean.
 </p>
 
 <p>
-I'm hoping to use this blog to gather, re-enforce, and remember my learnings in software. So, here's what I learned while making this website.
+I'm hoping to use this blog to gather, re-enforce, and remember my learnings in software. So, wihtout further ado, here's what I learned while making this website.
 </p>
 
 <h2>Making this website</h2>
 <p>
-I went out of my way to make this website somewhat "manually," (but still relying on managed services and existing libraries) to be exposed to as many details I haven't seen as possible.
+I went out of my way to make this website somewhat manually, but it's still completely dependent on managed services and existing libraries just "lower-level" ones. 
 </p>
 
 <p>
-I feel much better about my understanding of DNS after going through the full life-cycle from client device -> router -> recursive resolver -> root DNS -> top level domain DNS server -> eventual resolution until resolver
+In terms of networking, I feel much better about my understanding of DNS after going through the full life-cycle from client device -> router -> recursive resolver -> root DNS -> top level domain DNS server -> eventual resolution until resolver
 gets an A/AAAA record. The end of the chain can also be a CNAME and then the resolver recursively starts over. But in all cases, you realize that the recursive resolver needs an invariant for where to start, which is the root
-hints that contain the IPs for the root DNS. The TLD DNS for .com is just a handful of DNS servers maintained by a company called Verisign.
+hints that contain the IPs for the root DNS. The top level domain DNS for .com is just a handful of DNS servers maintained by a company called Verisign.
 </p>
 
 <p>
-Similarly, on the topic of IP, when setting up an EC2 instance, you need to define the "security group" for which IPs can connect to the EC2. Security groups are split by protocol and port. Since this website serves HTTPS and redirects HTTP to HTTPS,
-I leave 0.0.0.0/0 open on port 80 and 443. Then, you need to select an SSH security group. The best practice is to narrow the IPs included for SSH, but since your ISP can change your public IP at 
-any time, it's hard to provide a fixed value. The lazy solution is to rely on private keys. Mathematically with key-only authentication, an open ssh port is not suceptiable to brute force attack (infinite hotels with infinite typewriters kind of reasoning). 
-There are still other risks that I don't have the full context of, so don't leave port 20 open on a critical machine.
+Similarly, on the topic of IP, when setting up an EC2 instance, you need to define the "security group" for which IPs can connect to the EC2. Security groups are relative to protocols which are relative to ports. Since this website serves HTTPS and redirects HTTP to HTTPS,
+I leave 0.0.0.0/0 open on port 80 and 443. For SSH security groups, the best practice is to /not/ be open to all internet traffic. But, since your ISP can change your public IP at 
+any time, it's hard to provide a fixed IP. The lazy solution is to leave port 20 open to all IPs, but to only accept key based auth. Mathematically, with key-only authentication, an open ssh port is not suceptiable to brute force attack (infinite hotels with infinite typewriters kind of reasoning). 
+You still shouldn't leave the port open for reasons I don't yet understand, but still don't leave port 20 open on a critical machine.
 </p>
 
 <p>
-I've worked on AWS teams that put the service inside of a VPC and even configured Route53 records, but it's all too easy to work on something just following existing patterns without understanding what it is.
+I've worked on AWS teams that configure the service inside of a VPC and even configured Route53 records, but it's easy to work on something just following existing patterns without understanding what it is. Just this simple
+website helped me wrap my head around the core concepts.
 </p>
 
 <p>
