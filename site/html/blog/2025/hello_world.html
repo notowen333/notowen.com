@@ -9,57 +9,63 @@
 
 <h2>My software beginnings and first few years in industry</h2>
 <p>
-This is my second try at a software blog. My first attempt was in college. I was studying at Wesleyan University, a small liberal arts college 
-in Connecticut, trying to get a software internship. At Wesleyan the CS curriculum focused mainly on math, proofs, and programming languages. I
-had almost no practical software engineering skills. I didn't know what a unit test was, I hadn't heard of SQL, I hadn't heard of AuthN/AuthZ, and I didn't understand the
-basics of a client server relationship.
+This is my second try at a software blog. My first attempt was in college when I was studying at Wesleyan University, a small liberal arts college 
+in Connecticut. At Wesleyan, the CS curriculum focused on math, proofs, and programming languages. I learned no practical software engineering skills. 
+I didn't know what a unit test was, I hadn't heard of SQL, I hadn't heard of AuthN/AuthZ, and I didn't understand the basics of a client server relationship.
 </p>
 
 <p>
-I also didn't have interview-style alogrithms skills, so I failed all the automated assessments that companies sent me. This began my quest to 
+I also didn't have interview-style algorithms skills, so while applying for internships, I failed every automated assessment. This began my quest to 
 learn practical skills and get a job. I joined the <a href="https://privacytechlab.org">privacy tech lab</a> at Wesleyan where I worked on <a href="https://github.com/privacy-tech-lab/privacy-pioneer">Privacy Pioneer</a>,
 a browser extension that intercepted HTTP requests and responses to generate "privacy labels" based on automated scanning techniques. We wrote a React app to implement the extension's
-pop-up window and full-featured webpage. The backend was a browser extension <a href="https://developer.chrome.com/docs/extensions/develop/concepts/service-workers">"worker"</a> which was a small
-JavaScript program that ran in the background. It uses a Firefox (not available to Chrome extensions) broswer extension API, `webRequest`, to read HTTP requests and responses.
+pop-up window and webpage. The backend was a <a href="https://developer.chrome.com/docs/extensions/develop/concepts/service-workers">"service worker"</a>—a small
+JavaScript program running in the background. Only Firefox has the `webRequest` API Privacy Pioneer needed to read HTTP requests and responses, so we never made it to Chrome.
 </p>
 
 <p>
-What I didn't really put together while working on Privacy Pioneer was how most software applications are built by combining managed services. Modeling them, deploying them, providing credentials to them, instantiating clients and calling into them. For storage, for 
-compute, for networking, for authentication. Managed services, whether internal or external, is how most software is implemented. Until I started at AWS after graduation, I didn't know the first thing about managed services. At AWS managed services are created
-using other AWS managed services!
+What I didn't put together working on Privacy Pioneer was how to build software using managed services. I hadn't seen modeling services, deploying services, providing credentials to services, or instantiating clients to call services. 
+Whether it's services for storage, for compute, for networking, for authentication-this is how most software is implemented. At AWS, most managed services are created
+by combining other AWS managed services!
 </p>
 
 <p>
-Without asking for any transfers, I've been shuffled to four different teams and three orgs in 3 years at AWS. I've mostly worked in developer tooling: CodeBuild, Codecatalyst (failed GitHub competitor),
-Q Developer (llm chat panel in the AWS console), and now Bedrock AgentCore—my first team that is more traditional infra. I've learned a lot in these three years, but I'm still only at the very
-beginning of my journey as a developer. I'm further along than I was leaving Wesleyan as a fresh graduate, but the software world is an endless ocean.
+In 3 years at AWS, without asking for any transfers, I've been shuffled to four teams and three orgs. Primarily I've worked in developer tooling: CodeBuild, Codecatalyst (failed GitHub competitor),
+Q Developer (llm chat panel in the AWS console), and now Bedrock AgentCore, which is my first departure from developer tooling. I've learned a lot in these three years, but it's 
+still early days for me.
 </p>
 
 <p>
-I'm hoping to use this blog to gather, re-enforce, and remember my learnings in software. So, wihtout further ado, here's what I learned while making this website.
+I'm hoping to use this blog to gather, reinforce, and remember my learnings in software. So, to inaugurate the blog, here's what I learned while making this website.
 </p>
 
 <h2>Making this website</h2>
 <p>
-I went out of my way to make this website somewhat manually, but it's still completely dependent on managed services and existing libraries just "lower-level" ones. 
+I went out of my way to make this website somewhat manually, but it's still completely dependent on managed services and existing libraries just "lower-level" ones. I didn't use anything fancy like 
+Neflify, Vercel, CloudFront, CloudFlare Pages, GitHub Pages (what I used last time), or a no-code builder. My goal was to encounter the details that are abstracted by popular modern solutions.
 </p>
 
 <p>
-In terms of networking, I feel much better about my understanding of DNS after going through the full life-cycle from client device -> router -> recursive resolver -> root DNS -> top level domain DNS server -> eventual resolution until resolver
-gets an A/AAAA record. The end of the chain can also be a CNAME and then the resolver recursively starts over. But in all cases, you realize that the recursive resolver needs an invariant for where to start, which is the root
-hints that contain the IPs for the root DNS. The top level domain DNS for .com is just a handful of DNS servers maintained by a company called Verisign.
+I made good learnings about networking. I finally wrapped my head around DNS through its full life-cycle: from client device -> router -> recursive resolver -> root DNS -> top level domain DNS server -> eventual resolution until resolver
+gets an A/AAAA record. I learned the easter egg that the recursive resolver starts with a root hints file to identify the IPs of the root DNS (so many systems need a gotcha invariant like this). 
+The TLD DNS for .com is just a handful of DNS servers maintained by a company called Verisign. When you buy a .com domain, whether through CloudFlare or GoDaddy or Namecheap, a record is written into
+Verisign's servers pointing to the DNS that the chosen managed provider runs for you.
 </p>
 
 <p>
 Similarly, on the topic of IP, when setting up an EC2 instance, you need to define the "security group" for which IPs can connect to the EC2. Security groups are relative to protocols which are relative to ports. Since this website serves HTTPS and redirects HTTP to HTTPS,
-I leave 0.0.0.0/0 open on port 80 and 443. For SSH security groups, the best practice is to /not/ be open to all internet traffic. But, since your ISP can change your public IP at 
-any time, it's hard to provide a fixed IP. The lazy solution is to leave port 20 open to all IPs, but to only accept key based auth. Mathematically, with key-only authentication, an open ssh port is not suceptiable to brute force attack (infinite hotels with infinite typewriters kind of reasoning). 
-You still shouldn't leave the port open for reasons I don't yet understand, but still don't leave port 20 open on a critical machine.
+I leave 0.0.0.0/0 open on port 80 and 443. For the SSH security group on port 22, the best practice is to /not/ be open to all internet traffic. But, since your ISP can change your router's public IP at
+any time, it's hard to provide a fixed IP. 
 </p>
 
 <p>
-I've worked on AWS teams that configure the service inside of a VPC and even configured Route53 records, but it's easy to work on something just following existing patterns without understanding what it is. Just this simple
-website helped me wrap my head around the core concepts.
+The lazy solution to SSH security group is to leave port 22 open to all IPs, but to only accept key based (not password) auth. Mathematically, with key-only authentication, an open ssh port is not susceptible to brute force 
+attack due to the mathematical properties of Ed25519 (the default key signature system for EC2). The search space for the security target 2^128 is so large, that even a quantum computer significantly more powerful than the SOTA 
+is not even close to brute forcing a Ed25519 key. It's still not smart to leave SSH open to all traffic for other reasons that I don't have familiarity with.
+</p>
+
+<p>
+I've worked on AWS teams that configure services inside of a VPC and even updated Route53 records, but these experiences didn't force me to build a complete understanding.
+It's easy to finish a task by following existing patterns. 
 </p>
 
 <p>
@@ -68,35 +74,38 @@ Nginx was popular in the Apache days as a full server solution. That's why it ha
 </p>
 
 <p>
-reverse-proxy: "an entrypoint server running in front of the backend server/s that maintains connections with clients and opens new connections with the backend where application logic
-is implemented."
+"an entrypoint server running in front of the backend server/s that maintains connections with clients and opens new connections with the backend where application logic
+is implemented." It's the front man. Which is why the name "reverse" is confusing!
 </p>
 
 <p>
-The service can expose the reverse-proxy IP and the client has no knowledge of the backend networking. To use nginx as an L7 load balancer, you point the DNS record
-at the IP running nginx and then inside of that server, make connections to backend services. Any L7 LB is also a reverse-proxy. Popular cloud-based ones would be AWS ALB, AWS API Gateway, and the GCP/Azure versions of these products.
+Services can expose the reverse-proxy IP and then clients don't become privy to any details about the backend networking configuration. To use nginx as an L7 (application layer) load balancer, point the DNS record
+at the IP running nginx and then inside of that server, make connections to backend services. Indeed, any L7 LB is also a reverse-proxy because it terminates TLS and routes requests by establishing new connections with backend services. 
+Popular cloud-based ones would be AWS ALB, AWS API Gateway, and the GCP/Azure versions of these products.
 </p>
 
 <p>To serve this website:</p>
 <ol>
     <li>ssh into the EC2 bearing the private key</li>
     <li>install and start nginx on the EC2</li>
-    <li>provide a CA on the machine by running lets encrypt python script that verifies ownership (this writes a private secret to the EC2 disk)</li>
-    <li>give EC2 an elastic IPV4 address and provide that in the DNS as the A record</li>
-    <li>(optional) assign an IPV6 address in the auto-generated VPC associated with the EC2 and assign that in the DNS as the AAAA record</li>
-    <li>Add private key as a GitHub secret and let the GitHub action runner ssh into the machine, copy the content of the repo onto the EC2 box, and reload nginx</li>
+    <li>provide a TLS cert chain and private key on the EC2 via let's encrypt challenge based auth</li>
+    <li>give EC2 an elastic IPV4 address and populate the DNS A record</li>
+    <li>(optional) assign an IPV6 address to the EC2 and populate the DNS AAAA record</li>
+    <li>give Ed25519 EC2 private key as GitHub secret </li>
+    <li>define a GitHub action workflow that runs on git push that clones the repo, uses the private key to ssh into the EC2, and copies the repo onto the EC2</li>
+    <li>the GitHub action runs a deploy script that copies over all the HTML files and nginx defintions into the reserved directories that nginx serves from.</li>
 </ol>
 
 <h2>Aside: Trying and giving up on markdown</h2>
 <p>
-I started this first post using straight HTML and got stuck on an a few &lt;a&gt;&lt;/a&gt; tags, so in a classic software engineer fashion, I tried to setup a bespoke markdown -> html converter
+I started this first post using straight HTML and got stuck on a few &lt;a&gt;&lt;/a&gt; tags, so I tried to setup a markdown -> html converter
 because nginx didn't have this out of the box. I picked a tool, <code>pandoc</code>, discovered that it's not installable on the AL2023 OS running on my EC2, and implemented a work-around where the GitHub runner
-installs and runs pandoc in its machine, and then copies that output into the EC2. 
+installs and runs pandoc itself, and then copies the final output into the EC2. 
 </p>
 
 <p>
-I looked back at this a week later and decided this was way too complicated for what this website is supposed to be. Serve static text. So I deleted it all! Simplicity and neatness really go a far way.
-At the same time, I just spend more time than I would like fighting with HTML. Hopefully the LLM can bridge the tradeoff here and fix-up my HTML for me :&#41;
+I looked back at this a week later and decided this was too complicated for the purpose of the website-serve static text. So I deleted it all!
+At the same time, I just spent an embarrassing amount of time fighting with HTML. Hopefully LLMs can bridge the tradeoff here and fix my HTML for me :&#41;
 </p>
 
 </body>
