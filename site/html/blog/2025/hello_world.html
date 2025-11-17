@@ -45,7 +45,7 @@ Neflify, Vercel, CloudFront, CloudFlare Pages, GitHub Pages (what I used last ti
 </p>
 
 <p>
-I made good learnings about networking. I finally wrapped my head around DNS through its full life-cycle: from client device -> router -> recursive resolver -> root DNS -> top level domain DNS server -> eventual resolution until resolver
+Making this website was a good entrypoint towards networking. I finally wrapped my head around DNS through its full life-cycle: from client device -> router -> recursive resolver -> root DNS -> top level domain DNS server -> eventual resolution until resolver
 gets an A/AAAA record. I learned the easter egg that the recursive resolver starts with a root hints file to identify the IPs of the root DNS (so many systems need a gotcha invariant like this). 
 The TLD DNS for .com is just a handful of DNS servers maintained by a company called Verisign. When you buy a .com domain, whether through CloudFlare or GoDaddy or Namecheap, a record is written into
 Verisign's servers pointing to the DNS that the chosen managed provider runs for you.
@@ -58,9 +58,13 @@ any time, it's hard to provide a fixed IP.
 </p>
 
 <p>
-The lazy solution to SSH security group is to leave port 22 open to all IPs, but to only accept key based (not password) auth. Mathematically, with key-only authentication, an open ssh port is not susceptible to brute force 
-attack due to the mathematical properties of Ed25519 (the default key signature system for EC2). The search space for the security target 2^128 is so large, that even a quantum computer significantly more powerful than the SOTA 
-is not even close to brute forcing a Ed25519 key. It's still not smart to leave SSH open to all traffic for other reasons that I don't have familiarity with.
+The lazy solution to configuring a SSH security group is to leave port 22 open to all IPs, but to only accept key based-not password-auth. Mathematically, with key-only authentication, an open ssh port is not susceptible to brute force 
+attack due to the mathematical properties of Ed25519 which is the default key signature system for EC2.
+</p>
+
+<p>
+The search space for the security target (how much work to break the key) of 2^128 is so large, that even a quantum computer significantly more powerful than the SOTA 
+is not even close to brute forcing a Ed25519 key. There are other exploits besides breaking the private key which make leaving port 22 open to all traffic not suited for important systems.
 </p>
 
 <p>
@@ -104,7 +108,7 @@ installs and runs pandoc itself, and then copies the final output into the EC2.
 </p>
 
 <p>
-I looked back at this a week later and decided this was too complicated for the purpose of the website-serve static text. So I deleted it all!
+I looked back at this a week later and decided this was too complicated for the purpose of the website—serve static text. So I deleted it all!
 At the same time, I just spent an embarrassing amount of time fighting with HTML. Hopefully LLMs can bridge the tradeoff here and fix my HTML for me :&#41;
 </p>
 
